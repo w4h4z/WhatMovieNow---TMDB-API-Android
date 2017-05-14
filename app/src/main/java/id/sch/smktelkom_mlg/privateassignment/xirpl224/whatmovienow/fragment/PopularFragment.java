@@ -1,109 +1,82 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
 import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.R;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.adapter.SourceAdapter;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.model.Source;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.model.SourcesResponse;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.service.GsonGetRequest;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.service.VolleySingleton;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PopularFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PopularFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by Wahaz on 15/05/2017.
  */
+
 public class PopularFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    ArrayList<Source> mList = new ArrayList<>();
+    SourceAdapter mAdapter;
 
     public PopularFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PopularFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PopularFragment newInstance(String param1, String param2) {
-        PopularFragment fragment = new PopularFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_popular, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return inflater.inflate(R.layout.fragment_now, container, false);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdapter = new SourceAdapter(this.getActivity(), mList);
+        recyclerView.setAdapter(mAdapter);
+
+        downloadDataSource();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    private void downloadDataSource() {
+        String url = "https://api.themoviedb.org/3/movie/popular?api_key=80651057d12eaab3eceb3e1fd79cc100&language=en-US";
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        GsonGetRequest<SourcesResponse> myRequest = new GsonGetRequest<SourcesResponse>
+                (url, SourcesResponse.class, null, new Response.Listener<SourcesResponse>() {
+
+                    @Override
+                    public void onResponse(SourcesResponse response) {
+                        Log.d("FLOW", "onResponse: " + (new Gson().toJson(response)));
+                        if (response.page.equals("1")) {
+                            mList.addAll(response.results);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FLOW", "onErrorResponse: ", error);
+                    }
+                });
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(myRequest);
     }
 }

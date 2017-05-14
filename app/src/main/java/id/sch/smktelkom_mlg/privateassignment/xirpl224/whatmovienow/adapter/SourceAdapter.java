@@ -73,7 +73,9 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.textViewName);
             tvDesc = (TextView) itemView.findViewById(R.id.textViewDesc);
+            tvDate = (TextView) itemView.findViewById(R.id.textViewDate);
             ivPoster = (ImageView) itemView.findViewById(R.id.imageView);
+
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

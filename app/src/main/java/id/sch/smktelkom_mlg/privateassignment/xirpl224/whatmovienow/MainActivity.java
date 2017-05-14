@@ -1,8 +1,6 @@
 package id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.fragment.NowFragment;
+import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.fragment.PopularFragment;
 import id.sch.smktelkom_mlg.privateassignment.xirpl224.whatmovienow.fragment.SoonFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -80,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -145,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (position == 1) {
                 setTheme(R.style.AppTheme);
                 return new SoonFragment();
+            } else if (position == 2) {
+                setTheme(R.style.AppTheme);
+                return new PopularFragment();
             } else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
@@ -153,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -163,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
                     return "Now Playing";
                 case 1:
                     return "Cooming Soon";
+                case 2:
+                    return "Popular Movies";
             }
             return null;
         }
