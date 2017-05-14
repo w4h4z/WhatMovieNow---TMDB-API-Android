@@ -40,4 +40,16 @@
         android:textColor="@android:color/black"
         tools:text="Deskripsi" />
 
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewDesc"
+        android:layout_alignStart="@+id/textViewDesc"
+        android:layout_below="@+id/textViewDesc"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        tools:text="Release Date" />
+
 </RelativeLayout>

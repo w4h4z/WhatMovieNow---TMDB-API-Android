@@ -45,6 +45,7 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
         Source source = list.get(position);
         holder.tvName.setText(source.title);
         holder.tvDesc.setText(source.overview);
+        holder.tvDate.setText(source.release_date);
         //holder.itemView.setBackgroundColor(source.color);
         Glide.with(context)
                 .load(IMAGE_URL_BASE_PATH + source.poster_path)
@@ -66,6 +67,7 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
         ImageView ivPoster;
         TextView tvName;
         TextView tvDesc;
+        TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

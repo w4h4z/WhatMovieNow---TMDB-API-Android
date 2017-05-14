@@ -14,5 +14,6 @@ public class Source {
     public String category;
     public String language;
     public String country;
+    public String release_date;
     public List<String> sortBysAvailable;
 }
