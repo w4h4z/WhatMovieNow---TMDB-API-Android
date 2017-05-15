@@ -1,4 +1,4 @@
-# WhatMovieNow - TMDB API - Api Android
+# WhatMovieNow - TMDB API Android
 <ul>
   <li>Nama Aplikasi : What Movie Now</li>
   <li>Link File Aplikasi Release : https://drive.google.com/file/d/0B5opNXG3jSUQSkRhd1pNSng0ejg/view?usp=sharing</li>
