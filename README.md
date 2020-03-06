@@ -46,7 +46,4 @@
 
 <img src="https://docs.google.com/uc?id=0B5opNXG3jSUQdFBLNDFwcEJxLVk" width="400"> <img src="https://docs.google.com/uc?id=0B5opNXG3jSUQWlpZSXJtd1pVUVE" width="400">
 
-<img src="https://docs.google.com/uc?id=0B5opNXG3jSUQWXdYSEdXRFZxNkk" width="400"> <img src="https://docs.google.com/uc?id=0B5opNXG3jSUQZ0pxMUxNd003UnM" width="400">
-
-<img src="https://docs.google.com/uc?id=0B5opNXG3jSUQNWU5R0dQWGJmR2M" width="400"> <img src="https://docs.google.com/uc?id=0B5opNXG3jSUQX29JTldmNEdTN0E" width="400"> 
 
